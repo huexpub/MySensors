@@ -45,6 +45,7 @@
 
 #include "core/MySplashScreen.h"
 #include "core/MySensorsCore.h"
+#include "core/MyDiscover.h"
 
 // OTA Debug, has to be defined before HAL
 #if defined(MY_OTA_LOG_SENDER_FEATURE) || defined(MY_OTA_LOG_RECEIVER_FEATURE)
@@ -450,6 +451,8 @@ MY_DEFAULT_RX_LED_PIN in your sketch instead to enable LEDs
 #elif defined(__arm__) && defined(TEENSYDUINO)
 #include "hal/architecture/Teensy3/MyMainTeensy3.cpp"
 #endif
+
+#include "core/MyDiscover.cpp"
 
 #endif
 

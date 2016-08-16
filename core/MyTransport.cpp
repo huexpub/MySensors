@@ -642,6 +642,17 @@ uint32_t transportGetHeartbeat(void)
 	return transportTimeInState();
 }
 
+
+void transportDiscover(const uint8_t sender, const uint8_t page) {
+	TRANSPORT_DEBUG(PSTR("TSF:MSG:DISC,PG=%d\n"), page);
+	if (prepareDiscoverResponse(_msgTmp, sender, page)) {
+		// random delay to minimize collisions
+		delay(hwMillis() & 0x3ff);
+		transportRouteMessage(_msgTmp);
+	}
+}
+
+
 void transportProcessMessage(void)
 {
 	// Manage signing timeout
@@ -865,8 +876,9 @@ void transportProcessMessage(void)
 				if (last == _transportConfig.parentNodeId) {
 					// random wait to minimize collisions
 					delay(hwMillis() & 0x3ff);
-					(void)transportRouteMessage(build(_msgTmp, sender, NODE_SENSOR_ID, C_INTERNAL,
-					                                  I_DISCOVER_RESPONSE).set(_transportConfig.parentNodeId));
+					transportDiscover(sender, _msg.getByte());
+					//(void)transportRouteMessage(build(_msgTmp, sender, NODE_SENSOR_ID, C_INTERNAL,
+					//                                  I_DISCOVER_RESPONSE).set(_transportConfig.parentNodeId));
 					// no return here (for fwd if repeater)
 				}
 			}
