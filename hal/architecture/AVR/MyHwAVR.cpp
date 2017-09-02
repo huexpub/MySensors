@@ -34,9 +34,9 @@ bool hwInit(void)
 
 volatile uint8_t _wokeUpByInterrupt =
     INVALID_INTERRUPT_NUM;    // Interrupt number that woke the mcu.
-volatile uint8_t _wakeUp1Interrupt  =
+volatile uint8_t _wakeUp1Interrupt =
     INVALID_INTERRUPT_NUM;    // Interrupt number for wakeUp1-callback.
-volatile uint8_t _wakeUp2Interrupt  =
+volatile uint8_t _wakeUp2Interrupt =
     INVALID_INTERRUPT_NUM;    // Interrupt number for wakeUp2-callback.
 
 static uint32_t sleepRemainingMs = 0ul;
@@ -75,7 +75,7 @@ void clearPendingInterrupt(const uint8_t interrupt)
 
 // Watchdog Timer interrupt service routine. This routine is required
 // to allow automatic WDIF and WDIE bit clearance in hardware.
-ISR (WDT_vect)
+ISR(WDT_vect)
 {
 }
 
@@ -132,7 +132,7 @@ uint32_t hwInternalSleep(uint32_t ms)
 	while (!interruptWakeUp() && ms >= 16) {
 		for (uint8_t period = 9u; ; --period) {
 			const uint16_t comparatorMS = 1 << (period + 4);
-			if ( ms >= comparatorMS) {
+			if (ms >= comparatorMS) {
 				hwPowerDown(period); // 8192ms => 9, 16ms => 0
 				ms -= comparatorMS;
 				break;
@@ -184,8 +184,8 @@ int8_t hwSleep(const uint8_t interrupt1, const uint8_t mode1, const uint8_t inte
 	// and sleep might cause the ATMega to not wakeup from sleep as interrupt has already be handled!
 	cli();
 	// attach interrupts
-	_wakeUp1Interrupt  = interrupt1;
-	_wakeUp2Interrupt  = interrupt2;
+	_wakeUp1Interrupt = interrupt1;
+	_wakeUp2Interrupt = interrupt2;
 
 	// Attach external interrupt handlers, and clear any pending interrupt flag
 	// to prevent waking immediately again.
@@ -250,10 +250,10 @@ inline void hwRandomNumberInit(void)
 	for (uint8_t i=0; i<32; i++) {
 		const int pinValue = analogRead(MY_SIGNING_SOFT_RANDOMSEED_PIN);
 		// Wait until the analog value has changed
-		while ((pinValue == analogRead(MY_SIGNING_SOFT_RANDOMSEED_PIN)) && (timeout>=millis())) {
+		while ((pinValue == analogRead(MY_SIGNING_SOFT_RANDOMSEED_PIN)) && (timeout >= millis())) {
 			seed ^= (millis() << i);
 			// Check of data generation is slow
-			if (timeout<=millis()) {
+			if (timeout <= millis()) {
 				// Trigger pin again
 				pinMode(MY_SIGNING_SOFT_RANDOMSEED_PIN, INPUT_PULLUP);
 				pinMode(MY_SIGNING_SOFT_RANDOMSEED_PIN, INPUT);
@@ -302,7 +302,7 @@ uint16_t hwCPUVoltage(void)
 	delay(70);
 	// Do conversion
 	ADCSRA |= _BV(ADSC);
-	while (bit_is_set(ADCSRA,ADSC)) {};
+	while (bit_is_set(ADCSRA, ADSC)) {};
 	// return Vcc in mV
 	return (1125300UL) / ADC;
 }
@@ -328,7 +328,7 @@ uint16_t hwCPUFrequency(void)
 	// start timer1 with 1024 prescaling
 	TCCR1B = _BV(CS12) | _BV(CS10);
 	// wait until wdt interrupt
-	while (bit_is_clear(WDTCSR,WDIF)) {};
+	while (bit_is_clear(WDTCSR, WDIF)) {};
 	// stop timer
 	TCCR1B = 0;
 	// restore WDT settings
@@ -366,5 +366,5 @@ uint16_t hwFreeMem(void)
 {
 	extern int __heap_start, *__brkval;
 	int v;
-	return (int) &v - (__brkval == 0 ? (int) &__heap_start : (int) __brkval);
+	return (int)&v - (__brkval == 0 ? (int)&__heap_start : (int)__brkval);
 }

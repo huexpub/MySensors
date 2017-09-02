@@ -643,13 +643,13 @@ uint32_t transportGetHeartbeat(void)
 }
 
 
-void transportDiscover(const uint8_t sender, const uint8_t page) {
+void transportDiscover(const uint8_t sender, const uint8_t page)
+{
 	TRANSPORT_DEBUG(PSTR("TSF:MSG:DISC,PG=%d\n"), page);
-	if (prepareDiscoverResponse(_msgTmp, sender, page)) {
-		// random delay to minimize collisions
-		delay(hwMillis() & 0x3ff);
-		transportRouteMessage(_msgTmp);
-	}
+	prepareDiscoverResponse(_msgTmp, sender, page);
+	// random delay to minimize collisions
+	delay(hwMillis() & 0x3ff);
+	(void)transportRouteMessage(_msgTmp);
 }
 
 
@@ -740,6 +740,12 @@ void transportProcessMessage(void)
 					}
 #endif
 					return; // no further processing required
+				}
+				if (type == I_DISCOVER_REQUEST) {
+					if (last == _transportConfig.parentNodeId) {
+						transportDiscover(sender, _msg.getByte());
+						return;
+					}
 				}
 				if (type == I_FIND_PARENT_RESPONSE) {
 #if !defined(MY_GATEWAY_FEATURE) && !defined(MY_PARENT_NODE_IS_STATIC)
@@ -874,11 +880,7 @@ void transportProcessMessage(void)
 #if !defined(MY_GATEWAY_FEATURE)
 			if (type == I_DISCOVER_REQUEST) {
 				if (last == _transportConfig.parentNodeId) {
-					// random wait to minimize collisions
-					delay(hwMillis() & 0x3ff);
 					transportDiscover(sender, _msg.getByte());
-					//(void)transportRouteMessage(build(_msgTmp, sender, NODE_SENSOR_ID, C_INTERNAL,
-					//                                  I_DISCOVER_RESPONSE).set(_transportConfig.parentNodeId));
 					// no return here (for fwd if repeater)
 				}
 			}

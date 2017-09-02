@@ -452,6 +452,7 @@ MY_DEFAULT_RX_LED_PIN in your sketch instead to enable LEDs
 #include "hal/architecture/Teensy3/MyMainTeensy3.cpp"
 #endif
 
+// Discover functions
 #include "core/MyDiscover.cpp"
 
 #endif
