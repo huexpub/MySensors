@@ -64,6 +64,12 @@
 //#define MY_DEBUGDEVICE
 
 /**
+ * @def MY_TELNET_DEBUG
+ * @brief Define MY_TELNET_DEBUG to redirect debug prints.
+ */
+//#define MY_TELNET_DEBUG
+
+/**
  * @def MY_DEBUG_OTA
  * @brief Define MY_DEBUG_OTA to (nodeID) to redirect debug prints to given node ID
  *

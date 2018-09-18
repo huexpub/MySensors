@@ -26,8 +26,8 @@ void hwDebugPrint(const char *fmt, ...)
 	char fmtBuffer[MY_SERIAL_OUTPUT_SIZE];
 #ifdef MY_GATEWAY_SERIAL
 	// prepend debug message to be handled correctly by controller (C_INTERNAL, I_LOG_MESSAGE)
-	snprintf_P(fmtBuffer, sizeof(fmtBuffer), PSTR("0;255;%" PRIu8 ";0;%" PRIu8 ";"), C_INTERNAL,
-	           I_LOG_MESSAGE);
+	(void)snprintf_P(fmtBuffer, sizeof(fmtBuffer), PSTR("0;255;%" PRIu8 ";0;%" PRIu8 ";"), C_INTERNAL,
+	                 I_LOG_MESSAGE);
 	MY_DEBUGDEVICE.print(fmtBuffer);
 #endif
 	// prepend timestamp
@@ -35,7 +35,7 @@ void hwDebugPrint(const char *fmt, ...)
 	MY_DEBUGDEVICE.print(" ");
 	va_list args;
 	va_start(args, fmt);
-	vsnprintf_P(fmtBuffer, sizeof(fmtBuffer), fmt, args);
+	(void)vsnprintf_P(fmtBuffer, sizeof(fmtBuffer), fmt, args);
 #ifdef MY_GATEWAY_SERIAL
 	// Truncate message if this is gateway node
 	fmtBuffer[sizeof(fmtBuffer) - 2] = '\n';
@@ -43,6 +43,10 @@ void hwDebugPrint(const char *fmt, ...)
 #endif
 	va_end(args);
 	MY_DEBUGDEVICE.print(fmtBuffer);
+#if defined(MY_TELNET_DEBUG)
+	// new line
+	MY_DEBUGDEVICE.print('\r');
+#endif
 	MY_DEBUGDEVICE.flush();
 #else
 	va_list args;

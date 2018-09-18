@@ -127,8 +127,12 @@ void _begin(void)
 #else
 	CORE_DEBUG(PSTR("MCO:BGN:INIT " MY_NODE_TYPE ",CP=" MY_CAPABILITIES ",FQ=NA,REL=%"
 	                PRIu8 ",VER="
-	                MYSENSORS_LIBRARY_VERSION "\n"), MYSENSORS_LIBRARY_VERSION_PRERELEASE_NUMBER);
 #endif
+
+#if defined(MY_TELNET_DEBUG)
+	TelnetStream.begin();
+#endif
+
 	if (!hwInitResult) {
 		CORE_DEBUG(PSTR("!MCO:BGN:HW ERR\n"));
 		setIndication(INDICATION_ERR_HW_INIT);

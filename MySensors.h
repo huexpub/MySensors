@@ -83,6 +83,12 @@
 #error Hardware abstraction not defined (unsupported platform)
 #endif
 
+#if defined(MY_TELNET_DEBUG)
+#include "drivers/TelnetStream/TelnetStream.cpp"
+#undef MY_DEBUGDEVICE
+#define MY_DEBUGDEVICE TelnetStream
+#endif
+
 #include "hal/architecture/MyHwHAL.cpp"
 
 // commonly used macros, sometimes missing in arch definitions
