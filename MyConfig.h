@@ -204,6 +204,17 @@
  * @{
  */
 
+/**
+ * @def MY_DEBUG_VERBOSE_TRANSPORT_ENCRYPTION
+ * @brief Define this for verbose debug prints related to transport encryption.
+ */
+//#define MY_DEBUG_VERBOSE_TRANSPORT_ENCRYPTION
+
+/**
+ * @def MY_DEBUG_VERBOSE_TRANSPORT_QUEUE
+ * @brief Define this for verbose debug prints related to transport queues.
+ */
+//#define MY_DEBUG_VERBOSE_TRANSPORT_QUEUE
 
 /**
  * @defgroup RS485SettingGrpPub RS485
@@ -295,6 +306,24 @@
 #undef MY_RADIO_NRF24
 #define MY_RADIO_RF24
 #endif
+
+/**
+ * @def MY_RF24_ATC
+ * @brief Define this to enable a rudimentary ATC on RF24 radios
+ */
+//#define MY_RF24_ATC
+
+/**
+ * @def MY_RF24_BC_RETRIES
+ * @brief Define number of broadcasting retransmissions
+ */
+//#define MY_RF24_BC_RETRIES
+
+/**
+ * @def MY_RF24_USE_INTERRUPTS
+ * @brief Define this to use interrupts for RF24-based radio communication.
+ */
+//#define MY_RF24_USE_INTERRUPTS
 
 /**
  * @def MY_RADIO_RF24
@@ -471,6 +500,85 @@
  */
 
 /**
+ * @def MY_NRF5_CHL_MODE
+ * @brief Depending on HW and implementation CHL mode is low or high
+ *
+ */
+//#define MY_NRF5_CHL_MODE (HIGH)
+
+/**
+ * @def MY_NRF5_CHL_PIN
+ * @brief CHL toggle pin
+ *
+ */
+//#define MY_NRF5_CHL_PIN
+
+/**
+ * @def MY_NRF5_CPS_MODE
+ * @brief Depending on HW and implementation CPS mode is low or high
+ *
+ */
+//#define MY_NRF5_CPS_MODE (LOW)
+
+/**
+ * @def MY_NRF5_CPS_PIN
+ * @brief CPS toggle pin
+ *
+ */
+//#define MY_NRF5_CPS_PIN
+
+/**
+ * @def MY_NRF5_LNA_ENABLED
+ * @brief Enable LNA
+ *
+ */
+//#define MY_NRF5_LNA_ENABLED
+
+/**
+ * @def MY_NRF5_LNA_DISABLED
+ * @brief Disable LNA
+ *
+ */
+//#define MY_NRF5_LNA_DISABLED
+
+/**
+ * @def MY_NRF5_LNA_PIN
+ * @brief LNA toggle pin
+ *
+ */
+//#define MY_NRF5_LNA_PIN
+
+
+/**
+ * @def MY_NRF5_PA_DISABLED
+ * @brief PA disabled
+ *
+ */
+//#define MY_NRF5_PA_DISABLED
+
+
+/**
+ * @def MY_NRF5_PA_ENABLED
+ * @brief PA enabled
+ *
+ */
+//#define MY_NRF5_PA_ENABLED
+
+/**
+ * @def MY_NRF5_PA_LNA
+ * @brief Define to enable PA/LNA functionality
+ *
+ */
+//#define MY_NRF5_PA_LNA
+
+/**
+ * @def MY_NRF5_PA_PIN
+ * @brief PA toggle pin
+ *
+ */
+//#define MY_NRF5_PA_PIN
+
+/**
  * @def MY_RADIO_NRF5_ESB
  * @brief Define this to use nRF5 based radios for sensor network communication.
  *
@@ -570,7 +678,7 @@
  * @brief Declare the amount of incoming messages that can be buffered at driver level.
  */
 #ifndef MY_NRF5_ESB_RX_BUFFER_SIZE
-#define MY_NRF5_ESB_RX_BUFFER_SIZE (20)
+#define MY_NRF5_ESB_RX_BUFFER_SIZE (5)
 #endif
 
 /**
@@ -777,6 +885,16 @@
  * @see @ref personalization
  */
 //#define MY_RFM69_ENABLE_ENCRYPTION
+
+/**
+ * @def MY_RFM69_ENABLE_SW_ENCRYPTION
+ * @brief Define this to enable SW %AES encryption in the %RFM69 module.
+ *
+ * All nodes and gateway must have this enabled, and all must be personalized with the same %AES
+ * key.
+ * @see @ref personalization
+ */
+//#define MY_RFM69_ENABLE_SW_ENCRYPTION
 
 /**
  * @def MY_RFM69_MODEM_CONFIGURATION
@@ -2191,7 +2309,7 @@
 #define MY_DEBUG_VERBOSE_OTA_UPDATE //!< MY_DEBUG_VERBOSE_OTA_UPDATE
 #endif
 
-#if defined(MY_DEBUG) || defined(MY_DEBUG_VERBOSE_CORE) || defined(MY_DEBUG_VERBOSE_TRANSPORT) || defined(MY_DEBUG_VERBOSE_GATEWAY) || defined(MY_DEBUG_VERBOSE_SIGNING) || defined(MY_DEBUG_VERBOSE_OTA_UPDATE) || defined(MY_DEBUG_VERBOSE_RF24) || defined(MY_DEBUG_VERBOSE_NRF5_ESB) || defined(MY_DEBUG_VERBOSE_RFM69) || defined(MY_DEBUG_VERBOSE_RFM95) || defined(MY_DEBUG_VERBOSE_TRANSPORT_HAL)
+#if defined(MY_DEBUG) || defined(MY_DEBUG_VERBOSE_CORE) || defined(MY_DEBUG_VERBOSE_TRANSPORT) || defined(MY_DEBUG_VERBOSE_GATEWAY) || defined(MY_DEBUG_VERBOSE_SIGNING) || defined(MY_DEBUG_VERBOSE_OTA_UPDATE) || defined(MY_DEBUG_VERBOSE_RF24) || defined(MY_DEBUG_VERBOSE_NRF5_ESB) || defined(MY_DEBUG_VERBOSE_RFM69) || defined(MY_DEBUG_VERBOSE_RFM95) || defined(MY_DEBUG_VERBOSE_TRANSPORT_HAL) || defined(MY_DEBUG_VERBOSE_TRANSPORT_ENCRYPTION)
 #define DEBUG_OUTPUT_ENABLED	//!< DEBUG_OUTPUT_ENABLED
 #ifndef MY_DEBUG_OTA
 #define DEBUG_OUTPUT(x,...)		hwDebugPrint(x, ##__VA_ARGS__)	//!< debug
@@ -2307,6 +2425,8 @@
 #define MY_OTA_LOG_RECEIVER_FEATURE
 #define MY_OTA_LOG_SENDER_FEATURE
 // transport
+#define MY_DEBUG_VERBOSE_TRANSPORT_ENCRYPTION
+#define MY_DEBUG_VERBOSE_TRANSPORT_QUEUE
 #define MY_PARENT_NODE_IS_STATIC
 #define MY_REGISTRATION_CONTROLLER
 #define MY_TRANSPORT_UPLINK_CHECK_DISABLED
@@ -2396,12 +2516,25 @@
 #define MY_RF24_ENABLE_ENCRYPTION
 #define MY_RX_MESSAGE_BUFFER_FEATURE
 #define MY_RX_MESSAGE_BUFFER_SIZE
+#define MY_RF24_ATC
+#define MY_RF24_USE_INTERRUPTS
 // NRF5_ESB
 #define MY_RADIO_NRF5_ESB
 #define MY_NRF5_ESB_ENABLE_ENCRYPTION
 #define MY_DEBUG_VERBOSE_NRF5_ESB
 #define MY_NRF5_ESB_REVERSE_ACK_RX
 #define MY_NRF5_ESB_REVERSE_ACK_TX
+#define MY_NRF5_CPS_PIN
+#define MY_NRF5_CPS_MODE
+#define MY_NRF5_CHL_PIN
+#define MY_NRF5_CHL_MODE
+#define MY_NRF5_PA_PIN
+#define MY_NRF5_PA_ENABLED
+#define MY_NRF5_PA_DISABLED
+#define MY_NRF5_LNA_PIN
+#define MY_NRF5_LNA_ENABLED
+#define MY_NRF5_LNA_DISABLED
+#define MY_NRF5_PA_LNA
 // RFM69
 #define MY_RADIO_RFM69
 #define MY_IS_RFM69HW
@@ -2409,6 +2542,7 @@
 #define MY_RFM69_POWER_PIN
 #define MY_RFM69_MODEM_CONFIGURATION
 #define MY_RFM69_ENABLE_ENCRYPTION
+#define MY_RFM69_ENABLE_SW_ENCRYPTION
 #define MY_RFM69_ATC_MODE_DISABLED
 #define MY_RFM69_MAX_POWER_LEVEL_DBM
 #define MY_RFM69_RST_PIN

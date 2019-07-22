@@ -179,7 +179,7 @@ public:
 	virtual void sendACK(const void* buffer = "", uint8_t bufferSize=0); //!< sendACK
 	uint32_t getFrequency(); //!< getFrequency
 	void setFrequency(uint32_t freqHz); //!< setFrequency
-	void encrypt(const char* key); //!< encrypt
+	void encrypt(const uint8_t* key); //!< encrypt
 	void setCS(uint8_t newSPISlaveSelect); //!< setCS
 	int16_t readRSSI(bool forceTrigger=false); //!< readRSSI
 	void promiscuous(bool onOff=true); //!< promiscuous

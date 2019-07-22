@@ -505,7 +505,7 @@ bool RFM69::receiveDone()
 // To enable encryption: radio.encrypt("ABCDEFGHIJKLMNOP");
 // To disable encryption: radio.encrypt(null) or radio.encrypt(0)
 // KEY HAS TO BE 16 bytes !!!
-void RFM69::encrypt(const char* key)
+void RFM69::encrypt(const uint8_t* key)
 {
 	setMode(RFM69_MODE_STANDBY);
 	if (key != 0) {
