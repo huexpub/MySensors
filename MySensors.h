@@ -73,9 +73,16 @@
 #elif defined(ARDUINO_ARCH_NRF5) || defined(ARDUINO_ARCH_NRF52)
 #include "hal/architecture/NRF5/MyHwNRF5.cpp"
 #include "hal/crypto/generic/MyCryptoGeneric.cpp"
-#elif defined(__arm__) && defined(TEENSYDUINO)
-#include "hal/architecture/Teensy3/MyHwTeensy3.cpp"
+#elif defined(TEENSYDUINO)
+#if defined(__MK20DX128__) || defined(__MK20DX256__) || defined(__MK64FX512__) || defined(__MK66FX1M0__) || defined(__MKL26Z64__)
+#include "hal/architecture/Teensyduino/Teensy3/MyHwTeensy3.cpp"
 #include "hal/crypto/generic/MyCryptoGeneric.cpp"
+#elif defined(__IMXRT1062__)
+#include "hal/architecture/Teensyduino/Teensy4/MyHwTeensy4.cpp"
+#include "hal/crypto/Teensyduino/Teensy4/MyCryptoTeensy4.cpp"
+#else
+#error Teensy platform not supported
+#endif
 #elif defined(__linux__)
 #include "hal/architecture/Linux/MyHwLinuxGeneric.cpp"
 #include "hal/crypto/generic/MyCryptoGeneric.cpp"
@@ -447,8 +454,14 @@ MY_DEFAULT_RX_LED_PIN in your sketch instead to enable LEDs
 #include "hal/architecture/Linux/MyMainLinuxGeneric.cpp"
 #elif defined(ARDUINO_ARCH_STM32F1)
 #include "hal/architecture/STM32F1/MyMainSTM32F1.cpp"
-#elif defined(__arm__) && defined(TEENSYDUINO)
-#include "hal/architecture/Teensy3/MyMainTeensy3.cpp"
+#elif defined(TEENSYDUINO)
+#if defined(__MK20DX128__) || defined(__MK20DX256__) || defined(__MK64FX512__) || defined(__MK66FX1M0__) || defined(__MKL26Z64__)
+#include "hal/architecture/Teensyduino/Teensy3/MyMainTeensy3.cpp"
+#elif defined(__IMXRT1062__)
+#include "hal/architecture/Teensyduino/Teensy4/MyMainTeensy4.cpp"
+#else
+#error Teensy platform not supported!
+#endif
 #endif
 
 #endif
