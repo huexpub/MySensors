@@ -261,26 +261,26 @@ typedef enum {
 
 // Getters/setters for special bit fields in header
 // deprecated in 3.0.0
-#define mSetVersion(_message, _version) _message.setVersion(_version) //!< \deprecated Set version field
-#define mGetVersion(_message) _message.getVersion() //!< \deprecated Get version field
+#define mSetVersion(_message, _version) _message.setVersion(_version) //!< \deprecated Set version field is deprecated, use @ref MyMessage::setVersion instead
+#define mGetVersion(_message) _message.getVersion() //!< \deprecated Get version field is deprecated, use @ref MyMessage::getVersion instead
 
-#define mSetSigned(_message, _signed) _message.setSigned(_signed) //!< \deprecated Set signed field
-#define mGetSigned(_message) _message.getSigned() //!< \deprecated Get signed field
+#define mSetSigned(_message, _signed) _message.setSigned(_signed) //!< \deprecated Set signed field is deprecated, use @ref MyMessage::setSigned instead
+#define mGetSigned(_message) _message.getSigned() //!< \deprecated Get signed field is deprecated, use @ref MyMessage::getSigned instead
 
-#define mSetLength(_message,_length) _message.setLength(_length) //!< \deprecated Set length field
-#define mGetLength(_message) _message.getLength() //!< \deprecated Get length field
+#define mSetLength(_message,_length) _message.setLength(_length) //!< \deprecated Set length field is deprecated, use @ref MyMessage::setLength instead
+#define mGetLength(_message) _message.getLength() //!< \deprecated Get length field is deprecated, use @ref MyMessage::getLength instead
 
-#define mSetCommand(_message, _command) _message.setCommand(_command) //!< \deprecated Set command field
-#define mGetCommand(_message) _message.getCommand() //!< \deprecated Get command field
+#define mSetCommand(_message, _command) _message.setCommand(_command) //!< \deprecated Set command field is deprecated, use @ref MyMessage::setCommand instead
+#define mGetCommand(_message) _message.getCommand() //!< \deprecated Get command field is deprecated, use @ref MyMessage::getCommand instead
 
-#define mSetRequestEcho(_message, _requestEcho) _message.setRequestEcho(_requestEcho) //!< \deprecated Set echo request field
-#define mGetRequestEcho(_message) _message.getRequestEcho() //!< \deprecated Get echo request field
+#define mSetRequestEcho(_message, _requestEcho) _message.setRequestEcho(_requestEcho) //!< \deprecated Set echo request field is deprecated, use @ref MyMessage::setRequestEcho instead
+#define mGetRequestEcho(_message) _message.getRequestEcho() //!< \deprecated Get echo request field is deprecated, use @ref MyMessage::getRequestEcho instead
 
-#define mSetEcho(_message, _echo) _message.setEcho(_echo) //!< \deprecated Set echo field
-#define mGetEcho(_message) _message.getEcho() //!< \deprecated Get echo field
+#define mSetEcho(_message, _echo) _message.setEcho(_echo) //!< \deprecated Set echo field is deprecated, use @ref MyMessage::setEcho instead
+#define mGetEcho(_message) _message.getEcho() //!< \deprecated Get echo field is deprecated, use @ref MyMessage::getEcho instead
 
-#define mSetPayloadType(_message, _payloadType) _message.setPayloadType(_payloadType) //!< \deprecated Set payload type field
-#define mGetPayloadType(_message) _message.getPayloadType() //!< \deprecated Get payload type field
+#define mSetPayloadType(_message, _payloadType) _message.setPayloadType(_payloadType) //!< \deprecated Set payload type field is deprecated, use @ref MyMessage::setPayloadType instead
+#define mGetPayloadType(_message) _message.getPayloadType() //!< \deprecated Get payload type field is deprecated, use @ref MyMessage::getPayloadType instead
 
 #if defined(__cplusplus) || defined(DOXYGEN)
 /**
@@ -484,6 +484,12 @@ public:
 	 * @return true if this is an echoed message
 	 */
 	bool isEcho(void) const;
+
+	/**
+	 * @brief Getter for echo-flag.
+	 * @return true if this is an echoed message
+	 */
+	bool getEcho(void) const;
 
 	/**
 	* @brief Setter for echo-flag.

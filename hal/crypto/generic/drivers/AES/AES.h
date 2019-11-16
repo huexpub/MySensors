@@ -294,7 +294,7 @@ public:
 	double millis();
 #endif
 private:
-	int round ;/**< holds the number of rounds to be used. */
+	byte round ;/**< holds the number of rounds to be used. */
 	byte key_sched [KEY_SCHEDULE_BYTES]
 	;/**< holds the pre-computed key for the encryption/decrpytion. */
 	unsigned long long int IVC;/**< holds the initialization vector counter in numerical format. */

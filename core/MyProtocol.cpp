@@ -90,7 +90,7 @@ bool protocolSerial2MyMessage(MyMessage &message, char *inputString)
 
 char *protocolMyMessage2Serial(const MyMessage &message)
 {
-	(void)snprintf_P(_fmtBuffer, (uint8_t)MY_GATEWAY_MAX_SEND_LENGTH,
+	(void)snprintf_P(_fmtBuffer, sizeof(_fmtBuffer),
 	                 PSTR("%" PRIu8 ";%" PRIu8 ";%" PRIu8 ";%" PRIu8 ";%" PRIu8 ";%s\n"), message.getSender(),
 	                 message.getSensor(), message.getCommand(), message.isEcho(), message.getType(),
 	                 message.getString(_convBuffer));
@@ -99,7 +99,7 @@ char *protocolMyMessage2Serial(const MyMessage &message)
 
 char *protocolMyMessage2MQTT(const char *prefix, const MyMessage &message)
 {
-	(void)snprintf_P(_fmtBuffer, (uint8_t)MY_GATEWAY_MAX_SEND_LENGTH,
+	(void)snprintf_P(_fmtBuffer, sizeof(_fmtBuffer),
 	                 PSTR("%s/%" PRIu8 "/%" PRIu8 "/%" PRIu8 "/%" PRIu8 "/%" PRIu8 ""), prefix,
 	                 message.getSender(), message.getSensor(), message.getCommand(), message.isEcho(),
 	                 message.getType());

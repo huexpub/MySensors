@@ -130,10 +130,15 @@ MyMessage& MyMessage::setDestination(const uint8_t destinationId)
 // TODO: Remove before v3 is released, use isEcho instead
 bool MyMessage::isAck(void) const
 {
-	return this->isEcho();
+	return this->getEcho();
 }
 
 bool MyMessage::isEcho(void) const
+{
+	return this->getEcho();
+}
+
+bool MyMessage::getEcho(void) const
 {
 	return (bool)BF_GET(this->command_echo_payload, V2_MYS_HEADER_CEP_ECHO_POS,
 	                    V2_MYS_HEADER_CEP_ECHO_SIZE);

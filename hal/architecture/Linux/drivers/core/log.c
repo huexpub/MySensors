@@ -132,10 +132,11 @@ void vlog(int level, const char *fmt, va_list args)
 	if (!_log_quiet || _log_file_fp != NULL) {
 		/* Get current time */
 		time_t t = time(NULL);
-		struct tm *lt = localtime(&t);
+		struct tm lt;
+		localtime_r(&t, &t);
 
 		char date[16];
-		date[strftime(date, sizeof(date), "%b %d %H:%M:%S", lt)] = '\0';
+		date[strftime(date, sizeof(date), "%b %d %H:%M:%S", &lt)] = '\0';
 
 		if (_log_file_fp != NULL) {
 			fprintf(_log_file_fp, "%s %-5s ", date, _log_level_names[level]);
